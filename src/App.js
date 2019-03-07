@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       institution: ''
     };
+    this.selectInstitution = this.selectInstitution.bind(this);
   }
 
   componentDidMount() {
@@ -46,14 +47,24 @@ class App extends Component {
     }
   }
 
+  selectInstitution(value) {
+    console.log("App::selectInstitution", value);
+    this.setState({institution: value});
+  }
+
   render() {
     return (
-      <div className="container">
+      <div>
+        {this.state.institution === '' &&
           <div className="row">
               <div className="col">
-                  <InstitutionSearch/>
+                  <InstitutionSearch selectInstitution={this.selectInstitution} />
               </div>
           </div>
+        }
+        {this.state.institution !== '' &&
+          <div className="alert alert-success">{this.state.institution}</div>
+        }
       </div>
     )
   }

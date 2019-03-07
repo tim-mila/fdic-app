@@ -10,6 +10,7 @@ class InstitutionSearch extends Component {
     constructor(props) {
         super(props);
         this.handleSearch = this.handleSearch.bind(this);
+        this.selectInstitution = this.selectInstitution.bind(this);
 
         this.state = { institutions: [] };
 
@@ -21,8 +22,7 @@ class InstitutionSearch extends Component {
     }
 
     handleSearch(event) {
-        console.log("handleSearch ", event);
-        this.search(event.target.value + "*");    
+        this.search(event.target.value + "*");
     }
 
     search(q) {
@@ -30,6 +30,11 @@ class InstitutionSearch extends Component {
             crossdomain: true,
         })
         .then(response => this.setState({"institutions": response.data.data}));
+    }
+
+    selectInstitution(value) {
+        console.log("InstitutionSearch::selectInstitution", value);
+        this.props.selectInstitution(value);
     }
 
     render() {
@@ -46,7 +51,7 @@ class InstitutionSearch extends Component {
                 </div>
                 <div className="row">
                     <div className="col">
-                        <InstitutionList data={this.state.institutions}/>
+                        <InstitutionList data={this.state.institutions} selectInstitution={this.selectInstitution} />
                     </div>
                 </div>
             </div>
