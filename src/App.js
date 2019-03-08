@@ -1,14 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import './App.css';
+import Header from './component/Header';
 import InstitutionSearch from './component/InstitutionSearch';
 import BranchList from './component/BranchList';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import BranchDetail from './component/BranchDetail';
 
 class App extends Component {
 
   constructor(props) {
     super(props); 
     this.state = {
+      data: false,
       institution: ''
     };
     this.selectInstitution = this.selectInstitution.bind(this);
@@ -19,14 +23,13 @@ class App extends Component {
 
     // add event listener to save state to localStorage
     // when user leaves/refreshes the page
-    window.addEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
-    );
+    // window.addEventListener(
+      // "beforeunload",
+      // this.saveStateToLocalStorage.bind(this)
+    // );
   }
 
   selectInstitution(value) {
-    console.log("App::selectInstitution", value);
     this.setState({institution: value}, this.saveStateToLocalStorage);
   }
 
@@ -37,6 +40,7 @@ class App extends Component {
       if (localStorage.hasOwnProperty(key)) {
         // get the key's value from localStorage
         let value = localStorage.getItem(key);
+        console.log("App::hydrateStateWithLocalStorage " + key, value);
 
         // parse the localStorage string and setState
         try {
@@ -48,6 +52,7 @@ class App extends Component {
         }
       }
     }
+    this.setState({data: true}, function() {console.log(this.state);});
   }
 
   saveStateToLocalStorage() {
@@ -61,36 +66,30 @@ class App extends Component {
 
 
   render() {
+
+    // Short-cicuit rendering while we wait for hydration to complete
+    if (!this.state.data) {
+      return  <Header />
+    }
+
     return (
       <div>
 
         {/* Navigation */}
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-              </li>
-              {this.state.institution !== '' &&
-                  <span className="nav-link disabled"><li>Selected: <strong>{this.state.institution}</strong></li></span>
-              }
-            </ul>
-          </div>
-        </nav>
+        <Header institution={this.state.institution} />
 
-        {/* Conditional display of institution selection or branch location lookup */}
+        {/* Conditional display of institution selection */}
         {this.state.institution === '' &&
-          <div className="row">
-              <div className="col">
-                  <InstitutionSearch selectInstitution={this.selectInstitution} />
-              </div>
-          </div>
+          <InstitutionSearch selectInstitution={this.selectInstitution} />
         }
+
+        {/* Conditional display of branch locations */}
         {this.state.institution !== '' &&
-          <BranchList institution={this.state.institution} />
+          <Switch>            
+            <Route path="/location/:name"  render={props => <BranchDetail institution={this.state.institution} data={props}/>}  />
+            <Route path="/" render={props => <BranchList institution={this.state.institution}/>} />
+            {/* <Route path="/location/:name(*)" render={props => <BranchDetail {...props} />} /> */}
+          </Switch>
         }
       </div>
     )
