@@ -10,13 +10,15 @@ class Header extends Component {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
+                    {this.props.institution === '' &&
                     <li className="nav-item">
                         <Link to={"/"} className="nav-link" href="/">Home <span className="sr-only">(current)</span></Link>
                     </li>
+                    }
                     {this.props.institution !== '' &&
                     <li className="nav-item">
                         <Link to={"/"} className="nav-link" href="/">
-                            <span>Selected: <strong>{this.props.institution}</strong></span> <span className="sr-only">(current)</span>
+                            <span>Home: <strong>{this.props.institution}</strong></span> <span className="sr-only">(current)</span>
                         </Link>
                     </li>
                     }
