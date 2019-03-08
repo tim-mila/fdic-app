@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import './App.css';
-import './component/InstitutionSearch';
 import InstitutionSearch from './component/InstitutionSearch';
+import BranchList from './component/BranchList';
 
 class App extends Component {
 
@@ -13,18 +13,21 @@ class App extends Component {
     };
     this.selectInstitution = this.selectInstitution.bind(this);
   }
-
+  
   componentDidMount() {
     this.hydrateStateWithLocalStorage();
 
-    // // add event listener to save state to localStorage
-    // // when user leaves/refreshes the page
-    // window.addEventListener(
-    //   "beforeunload",
-    //   this.saveStateToLocalStorage.bind(this)
-    // );
+    // add event listener to save state to localStorage
+    // when user leaves/refreshes the page
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
 
-    console.log("Hello App Component");
+  selectInstitution(value) {
+    console.log("App::selectInstitution", value);
+    this.setState({institution: value}, this.saveStateToLocalStorage);
   }
 
   hydrateStateWithLocalStorage() {
@@ -47,14 +50,38 @@ class App extends Component {
     }
   }
 
-  selectInstitution(value) {
-    console.log("App::selectInstitution", value);
-    this.setState({institution: value});
+  saveStateToLocalStorage() {
+    // for every item in React state
+    for (let key in this.state) {
+      console.log("save to local storage " + key, this.state[key]);
+      // save to localStorage
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
   }
+
 
   render() {
     return (
       <div>
+
+        {/* Navigation */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto">
+              <li className="nav-item active">
+                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+              </li>
+              {this.state.institution !== '' &&
+                  <span className="nav-link disabled"><li>Selected: <strong>{this.state.institution}</strong></li></span>
+              }
+            </ul>
+          </div>
+        </nav>
+
+        {/* Conditional display of institution selection or branch location lookup */}
         {this.state.institution === '' &&
           <div className="row">
               <div className="col">
@@ -63,7 +90,7 @@ class App extends Component {
           </div>
         }
         {this.state.institution !== '' &&
-          <div className="alert alert-success">{this.state.institution}</div>
+          <BranchList institution={this.state.institution} />
         }
       </div>
     )

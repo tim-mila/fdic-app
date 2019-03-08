@@ -16,9 +16,6 @@ class InstitutionSearch extends Component {
 
         // debounce queries on input
         this.search = debounce(this.search, 500);
-
-        // init list
-        this.search('');
     }
 
     handleSearch(event) {
@@ -39,7 +36,7 @@ class InstitutionSearch extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container institution-search">
                 <div className="row">
                     <div className="col">
                         <form>

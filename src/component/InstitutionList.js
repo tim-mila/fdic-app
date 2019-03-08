@@ -27,10 +27,15 @@ class InstitutionList extends Component {
             <InstitutionCard data={item} key={item.data.NAME} handleSelect={this.handleSelect} />
         );
         return (
-            <div>
-                <div className="row">     
+            <div className="institution-list">
+                {list.length === 0 &&
+                    <span className="alert alert-light">No institutions found</span>
+                }
+                {list.length > 0 &&
+                <div className="row">
                     { list }
                 </div>
+                }
                 {this.state.toConfirm !== '' &&
                     <InstitutionConfirm toConfirm={this.state.toConfirm} handleConfirm={this.handleConfirm} />
                 }
