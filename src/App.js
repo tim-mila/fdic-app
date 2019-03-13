@@ -1,11 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import './App.css';
-import Header from './component/Header';
-import InstitutionSearch from './component/InstitutionSearch';
-import BranchList from './component/BranchList';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import BranchDetail from './component/BranchDetail';
+import RoutedApp from './component/RoutedApp';
 
 class App extends Component {
 
@@ -64,32 +60,11 @@ class App extends Component {
     }
   }
 
-
   render() {
-
-    // Short-cicuit rendering while we wait for hydration to complete
-    if (!this.state.data) {
-      return  <Header />
-    }
-
     return (
       <div>
-
-        {/* Navigation */}
-        <Header institution={this.state.institution} />
-
-        {/* Conditional display of institution selection */}
-        {this.state.institution === '' &&
-          <InstitutionSearch selectInstitution={this.selectInstitution} />
-        }
-
-        {/* Conditional display of branch locations */}
-        {this.state.institution !== '' &&
-          <Switch>            
-            <Route path="/location/:name"  render={props => <BranchDetail institution={this.state.institution} data={props}/>}  />
-            <Route path="/" render={props => <BranchList institution={this.state.institution}/>} />
-            {/* <Route path="/location/:name(*)" render={props => <BranchDetail {...props} />} /> */}
-          </Switch>
+        {this.state.data && 
+          <RoutedApp institution={this.state.institution} selectInstitution={this.selectInstitution} />
         }
       </div>
     )

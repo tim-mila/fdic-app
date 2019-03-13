@@ -3,7 +3,6 @@ import './InstitutionSearch.css';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import InstitutionList from './InstitutionList';
-import './InstitutionList';
 
 class InstitutionSearch extends Component {
 
@@ -35,20 +34,23 @@ class InstitutionSearch extends Component {
     }
 
     render() {
+        console.log("InstitutionSearch::render::" + window.location.href, this.props.institution);
         return (
-            <div className="container institution-search">
-                <div className="row">
-                    <div className="col">
-                        <form>
-                            <div className="form-group">
-                                <input type="text" placeholder="Search for financial institutions..." className="form-control" onChange={this.handleSearch}/>
-                            </div>
-                        </form>
+            <div>
+                <div className="container institution-search">
+                    <div className="row">
+                        <div className="col">
+                            <form>
+                                <div className="form-group">
+                                    <input type="text" placeholder="Search for financial institutions..." className="form-control" onChange={this.handleSearch}/>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <InstitutionList data={this.state.institutions} selectInstitution={this.selectInstitution} />
+                    <div className="row">
+                        <div className="col">
+                            <InstitutionList data={this.state.institutions} selectInstitution={this.selectInstitution} />
+                        </div>
                     </div>
                 </div>
             </div>
