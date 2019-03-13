@@ -21,12 +21,11 @@ class RoutedApp extends Component {
     }
 
     render() {
-        console.log("RoutedApp::render::" + window.location.href, this.props.institution);
         return (
             <div>
-                <Header institution={this.props.institution} />
                 <Router>
                     <div>
+                        <Header institution={this.props.institution} />
                         { this.props.institution !== '' && <Redirect to='/locations' push/> }
                         <Route path="/branch/:name" render={props => <BranchDetail institution={this.props.institution} data={props} /> }  />
                         <Route path="/locations" render={props => <BranchList institution={this.props.institution}/> }  />

@@ -74,13 +74,19 @@ class BranchDetail extends Component {
                 <div className="row">
                     <div className="col">
                         <h3>{this.props.data.match.params.name}</h3>
-                        { details }
+                        <div className="list-group">
+                            { details }
+                        </div>
                     </div>
                     <div className="col">
                         <h3>Notes</h3>
-                        { notes }
+                        <div className="mb-2">
+                            <div className="list-group">
+                                { notes }
+                            </div>
+                        </div>
                         <div className="row">
-                            <div className="col">
+                            <div className="col text-right">
                                 {!this.state.startNote && <button className="btn btn-primary" onClick={this.startNote}>Add Note</button>  }
                                 {this.state.startNote && <BranchNoteCreate saveNote={this.saveNote} cancelNote={this.cancelNote} /> }
                             </div>

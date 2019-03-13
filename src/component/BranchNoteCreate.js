@@ -29,14 +29,14 @@ class BranchNoteCreate extends Component {
     render() {
         return (
             <div>
-                <div className="row">
+                <div className="row mb-2">
                     <div className="col">
                         <textarea className="form-control" rows="5" value={this.state.note} onChange={this.noteChange}></textarea>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col text-right">
-                        <button className="btn btn-primary" onClick={this.saveNote}>Save</button>
+                        <button className="btn btn-primary mr-1" onClick={this.saveNote}>Save</button>
                         <button className="btn btn-light" onClick={this.cancel}>Cancel</button>
                     </div>
                 </div>

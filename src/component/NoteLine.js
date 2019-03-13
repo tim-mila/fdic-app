@@ -4,10 +4,8 @@ class NoteLine extends Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="col">
-                    { this.props.note }
-                </div>
+            <div className="list-group-item list-group-item-action">
+                { this.props.note }
             </div>
         );
     }

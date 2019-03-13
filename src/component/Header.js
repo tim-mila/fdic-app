@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
     render() {
@@ -11,13 +11,16 @@ class Header extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
-                            <Link to={"/"} className="nav-link" href="/">
-                                <span>Home:&nbsp;
-                                    {this.props.institution !== '' &&       
-                                        <strong>{this.props.institution}</strong>
-                                    }
-                                </span>
-                            </Link>
+                            {this.props.institution === '' &&       
+                                <Link to={"/"} className="nav-link" href="/">
+                                    <span>Home</span>
+                                </Link>            
+                            }
+                            {this.props.institution !== '' &&       
+                                <Link to={"/locations"} className="nav-link" href="/">
+                                    <span>Home:&nbsp;<strong>{this.props.institution}</strong></span>
+                                </Link>            
+                            }
                         </li>
                     </ul>
                 </div>

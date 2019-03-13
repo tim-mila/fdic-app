@@ -10,13 +10,12 @@ class InstitutionCard extends Component {
 
     selectInstitution(event) {
         event.preventDefault();
-        console.log("InstitutionCard::",event);
         this.props.handleSelect(event.target.value);
     }
 
     render() {
         return (
-            <div className="col-md-4 col-sm-6 col-xs-1">
+            <div className="col-md-4 col-sm-6 col-xs-1 mb-2">
                 <div className="card">
                     <div className="card-body">
                         <div className="card-title">
