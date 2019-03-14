@@ -13,7 +13,8 @@ class BranchView extends Component {
             locations: [],
             totalLocations: 0,
             currentOffset: 0,
-            terms: ""
+            terms: "",
+            loading: false
         }
 
         this.onSearch = this.onSearch.bind(this);
@@ -39,19 +40,23 @@ class BranchView extends Component {
         if (q !== "") {
             url += "&q=" + q;
         }
+
+        if (reset) {
+            this.setState({loading: true});
+        }
         
         axios.get(url, {
             crossdomain: true,
         }).then(response => {
             if (reset) {
-                this.setState({locations: response.data.data, totalLocations: response.data.meta.total, currentOffset: parseInt(response.data.meta.parameters.offset), terms: q});
+                this.setState({loading: false, locations: response.data.data, totalLocations: response.data.meta.total, currentOffset: parseInt(response.data.meta.parameters.offset), terms: q});
             }
             else {
                 let locations = this.state.locations;
                 response.data.data.forEach(element => {
                     locations.push(element);
                 });
-                this.setState({locations: locations, totalLocations: response.data.meta.total, currentOffset: parseInt(response.data.meta.parameters.offset), terms: q});
+                this.setState({loading: false, locations: locations, totalLocations: response.data.meta.total, currentOffset: parseInt(response.data.meta.parameters.offset), terms: q});
             }
         });
     };
@@ -60,22 +65,20 @@ class BranchView extends Component {
         let canLoadMore = this.state.totalLocations > (10 + this.state.currentOffset);
         return (
             <div className="container">
-                {this.state.locations.length === 0 && 
+                <div className="row">
+                    <div className="col">
+                        <BranchSearch institution={this.state.institution} onSearch={this.onSearch} />
+                    </div>
+                </div>
+                {this.state.loading && 
                     <div className="mt-2">
                         <Loading message="Loading branch locations"/>
                     </div>
                 }
-                {this.state.locations.length > 0 && 
-                    <div>
-                        <div className="row">
-                            <div className="col">
-                                <BranchSearch institution={this.state.institution} onSearch={this.onSearch} />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <BranchListView locations={this.state.locations} canLoadMore={canLoadMore} onLoadMore={this.onLoadMore} />
-                            </div>
+                {!this.state.loading && 
+                    <div className="row">
+                        <div className="col">
+                            <BranchListView locations={this.state.locations} canLoadMore={canLoadMore} onLoadMore={this.onLoadMore} />
                         </div>
                     </div>
                 }

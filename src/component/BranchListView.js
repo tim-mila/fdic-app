@@ -28,6 +28,15 @@ class BranchListView extends Component {
         
         return (
             <div>
+                {this.props.locations.length === 0 &&
+                    <div className="row">
+                        <div className="col">
+                            <div className="alert alert-secondary">
+                                No branch locations found
+                            </div>
+                        </div>
+                    </div>
+                }
                 {this.props.locations.length > 0 &&
                     <div className="row">
                         <div className="col">

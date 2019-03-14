@@ -28,7 +28,7 @@ class InstitutionList extends Component {
                 {list.length === 0 &&
                     <div className="row">
                         <div className="col">
-                            <div class="alert alert-secondary" role="alert">
+                            <div className="alert alert-secondary" role="alert">
                                 No institutions found
                             </div>
                         </div>
