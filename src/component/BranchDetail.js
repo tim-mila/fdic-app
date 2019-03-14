@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './BranchDetail.css';
 import axios from 'axios';
 import BranchDetailLine from './BranchDetailLine';
 import BranchNoteCreate from './BranchNoteCreate';
@@ -73,13 +72,13 @@ class BranchDetail extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        <h3>{this.props.data.match.params.name}</h3>
+                        <h4>{this.props.data.match.params.name}</h4>
                         <div className="list-group">
                             { details }
                         </div>
                     </div>
                     <div className="col">
-                        <h3>Notes</h3>
+                        <h4>Notes</h4>
                         <div className="mb-2">
                             {notes.length === 0 && 
                                 <div className="alert alert-secondary">

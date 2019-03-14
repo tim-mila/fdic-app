@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './BranchList.css';
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import Loading from './Loading';

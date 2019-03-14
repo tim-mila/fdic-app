@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './InstitutionSearch.css';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import InstitutionList from './InstitutionList';
@@ -38,26 +37,24 @@ class InstitutionSearch extends Component {
     render() {
         console.log("InstitutionSearch::render::" + window.location.href, this.props.institution);
         return (
-            <div>
-                <div className="container institution-search">
-                    <div className="row">
-                        <div className="col">
-                            <form>
-                                <div className="form-group">
-                                    <input type="text" placeholder="Search for financial institutions..." className="form-control" onChange={this.handleSearch}/>
-                                </div>
-                            </form>
-                        </div>
+            <div className="container mt-4">
+                <div className="row">
+                    <div className="col">
+                        <form>
+                            <div className="form-group">
+                                <input type="text" placeholder="Search for financial institutions..." className="form-control" onChange={this.handleSearch}/>
+                            </div>
+                        </form>
                     </div>
-                    <div className="row">
-                        <div className="col">
-                            {this.state.firstSearch && !this.state.searching && 
-                                <InstitutionList data={this.state.institutions} selectInstitution={this.selectInstitution} />
-                            }
-                            {this.state.searching &&
-                                <Loading message="Searching for Institutions"/>
-                            }
-                        </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        {this.state.firstSearch && !this.state.searching && 
+                            <InstitutionList data={this.state.institutions} selectInstitution={this.selectInstitution} />
+                        }
+                        {this.state.searching &&
+                            <Loading message="Searching for Institutions"/>
+                        }
                     </div>
                 </div>
             </div>

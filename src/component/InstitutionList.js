@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './InstitutionList.css';
 import InstitutionCard from './InstitutionCard';
 import InstitutionConfirm from './InstitutionConfirm';
 
