@@ -81,6 +81,11 @@ class BranchDetail extends Component {
                     <div className="col">
                         <h3>Notes</h3>
                         <div className="mb-2">
+                            {notes.length === 0 && 
+                                <div className="alert alert-secondary">
+                                    No notes added yet.
+                                </div>
+                            }
                             <div className="list-group">
                                 { notes }
                             </div>

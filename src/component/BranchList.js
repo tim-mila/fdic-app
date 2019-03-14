@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './BranchList.css';
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import Loading from './Loading';
 
 class BranchList extends Component {
-
     
     constructor(props) {
         super(props)
@@ -59,9 +59,16 @@ class BranchList extends Component {
             <div>
                 <div className="container">
                     <div>
-                        <div className="list-group">
-                            { locations }
-                        </div>
+                        {locations.length === 0 && 
+                            <div className="mt-2">
+                                <Loading message="Loading branch locations"/>
+                            </div>
+                        }
+                        {locations.length > 0 && 
+                            <div className="list-group mt-2">
+                                { locations }
+                            </div>
+                        }
                         {canLoadMore &&
                             <div className="row mt-2">
                                 <div className="col">

@@ -13,12 +13,10 @@ class InstitutionList extends Component {
     }
 
     handleSelect = (value) => {
-        console.log("InstitutionList::handleSelect", value);
         this.setState({toConfirm: value});
     }
 
     handleConfirm = (value) => {
-        console.log("InstitutionList::handleConfirm", value);
         this.props.selectInstitution(value);
     }
 
@@ -29,7 +27,13 @@ class InstitutionList extends Component {
         return (
             <div className="institution-list">
                 {list.length === 0 &&
-                    <span className="alert alert-light">No institutions found</span>
+                    <div className="row">
+                        <div className="col">
+                            <div class="alert alert-secondary" role="alert">
+                                No institutions found
+                            </div>
+                        </div>
+                    </div>
                 }
                 {list.length > 0 &&
                 <div className="row">

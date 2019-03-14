@@ -12,17 +12,14 @@ class BranchNoteCreate extends Component {
     }
 
     saveNote() {
-        console.log("Save note", this.state.note);
         this.props.saveNote(this.state.note);
     }
 
     cancel() {
-        console.log("Cancel note");
         this.props.cancelNote();
     }
 
     noteChange(e) {
-        console.log("Note change", e.target.value);
         this.setState({note: e.target.value});
     }
 

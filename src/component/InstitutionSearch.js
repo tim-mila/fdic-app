@@ -3,6 +3,7 @@ import './InstitutionSearch.css';
 import axios from 'axios';
 import debounce from 'lodash/debounce';
 import InstitutionList from './InstitutionList';
+import Loading from './Loading';
 
 class InstitutionSearch extends Component {
 
@@ -11,13 +12,14 @@ class InstitutionSearch extends Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.selectInstitution = this.selectInstitution.bind(this);
 
-        this.state = { institutions: [] };
+        this.state = { institutions: [], firstSearch: false, searching: false };
 
         // debounce queries on input
         this.search = debounce(this.search, 500);
     }
 
     handleSearch(event) {
+        this.setState({firstSearch: true, searching: true});
         this.search(event.target.value + "*");
     }
 
@@ -25,7 +27,7 @@ class InstitutionSearch extends Component {
         axios.get(process.env.REACT_APP_API_URL + "/FdicInstitutionSearch?q=" + q + "&fields=NAME", {
             crossdomain: true,
         })
-        .then(response => this.setState({"institutions": response.data.data}));
+        .then(response => this.setState({"institutions": response.data.data, searching: false}));
     }
 
     selectInstitution(value) {
@@ -49,7 +51,12 @@ class InstitutionSearch extends Component {
                     </div>
                     <div className="row">
                         <div className="col">
-                            <InstitutionList data={this.state.institutions} selectInstitution={this.selectInstitution} />
+                            {this.state.firstSearch && !this.state.searching && 
+                                <InstitutionList data={this.state.institutions} selectInstitution={this.selectInstitution} />
+                            }
+                            {this.state.searching &&
+                                <Loading message="Searching for Institutions"/>
+                            }
                         </div>
                     </div>
                 </div>
