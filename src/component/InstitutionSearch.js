@@ -19,7 +19,7 @@ class InstitutionSearch extends Component {
 
     handleSearch(event) {
         this.setState({firstSearch: true, searching: true});
-        this.search(event.target.value + "*");
+        this.search(event.target.value.trim() + "*");
     }
 
     search(q) {
